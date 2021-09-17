@@ -26,11 +26,10 @@
         path: /usr/share/springpetclinic/spring-petclinic-2.4.2.jar
         owner: springbootuser
         mode: '500'
-    - name: Touch again the same file, but do not change times this makes the task idempotent
-      ansible.builtin.file:
+    - name: adding springpetclinic.service file
+      ansible.builtin.copy:
         path: /etc/systemd/system/springpetclinic.service
         src: springpetclinic.service
-        state: file
     - name: systemctl enable and start the service
       ansible.builtin.systemd:
         name: springpetclinic.service
