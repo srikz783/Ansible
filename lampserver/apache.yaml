@@ -1,10 +1,43 @@
 ---
-- name: apache server
-  hosts: all
+- name: spring-pet-clinic
+  hosts: appserver
   become: yes
   tasks:
-    - name: ubuntu update and apache server installation
+    - name: apt update and java installation
       apt:
-        name: apache2
+        name: openjdk-11-jdk
         update_cache: yes
         state: present
+    - name: Creating  a directory if it does not exist
+      ansible.builtin.file:
+        path: /usr/share/springpetclinic
+        state: directory
+    - name: Downloading spring-pet-clinic
+      get_url:
+        url: https://referenceapplicationskhaja.s3-us-west-2.amazonaws.com/spring-petclinic-2.4.2.jar
+        dest: /usr/share/springpetclinic/
+    - name: Copying file 
+      ansible.builtin.copy:
+        dest: /usr/share/springpetclinic/spring-petclinic-2.4.2.jar
+        src: spring-petclinic-2.4.2.jar
+    - name: Adding user
+      ansible.builtin.user:
+        name: springbootuser
+        password: springbootuser
+        state: present
+    - name: Change file ownership, group and permissions
+      ansible.builtin.file:
+        path: /usr/share/springpetclinic/spring-petclinic-2.4.2.jar
+        owner: springbootuser
+        mode: '500'
+    - name: Touch again the same file, but do not change times this makes the task idempotent
+      ansible.builtin.file:
+        path: /etc/systemd/system/springpetclinic.service
+        src: springpetclinic.service
+        state: file
+    - name: systemctl enable and start the service
+      ansible.builtin.systemd:
+        name: springpetclinic.service
+        state: started
+        enabled: yes
+    
