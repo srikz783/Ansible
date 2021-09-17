@@ -28,7 +28,7 @@
         mode: '500'
     - name: adding springpetclinic.service file
       ansible.builtin.copy:
-        path: /etc/systemd/system/springpetclinic.service
+        dest: /etc/systemd/system/springpetclinic.service
         src: springpetclinic.service
     - name: systemctl enable and start the service
       ansible.builtin.systemd:
