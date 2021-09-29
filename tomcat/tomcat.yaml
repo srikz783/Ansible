@@ -1,0 +1,60 @@
+---
+- name: tomcat server
+  become: yes
+  hosts: all
+  tasks:
+    - name: java package 
+      package:
+        -name: java-11-openjdk
+    - name: group in tomcat
+      group:
+        name: tomcat
+        state: present
+    - name: user in tomcat
+      user:
+        name: tomcat
+        group: tomcat
+        src: /bin/false
+        dest: /opt/tomcat
+    - name: Downloading tomcat
+      get_url:
+        url: https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.53/bin/apache-tomcat-9.0.53.tar.gz
+        dest: /tmp
+    - name: untaring tomcat
+      command: "xzvf apache-tomcat-*tar.gz -C /opt/tomcat --strip-components=1"
+    - name: Change file ownership, group and permissions
+      file:
+        path: /opt/tomcat
+        owner: tomcat
+        group: tomcat
+    - name: Touch a file, using symbolic modes to set the permissions (equivalent to 0644)
+      file:
+        path: conf
+        mode: u=rwx,g=rx
+        state: directory
+    - name: Give insecure permissions to an existing file
+      file:
+        path: 
+          - /opt/tomcat/webapps
+          - /opt/tomcat/work
+          - /opt/tomcat/temp
+          - /opt/tomcat/logs
+        owner: tomcat
+        group: tomcat
+        state: directory
+    - name: copy the tomcat service
+      template:
+        src: tomcat.service
+        dest: /etc/systemd/system/tomcat.service
+    - name: demon reload
+      systemd:
+        state: restarted
+        daemon_reload: yes
+        name: tomcat.service
+    - name: enable and start tomcat service
+      service: 
+        name: tomcat.service
+        enabled: yes
+        state: started
+    
+
