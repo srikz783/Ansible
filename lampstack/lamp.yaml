@@ -1,0 +1,22 @@
+---
+- name: lampstack
+  host: all
+  become: yes
+  tasks:
+    - name: apache and php packages
+      package:
+       name: 
+        - apache2
+        - php
+        - libapache2-mod-php
+        - php-mysql
+        - php-cli
+       state: present
+    - name: Copying php file
+      copy:
+          src: info.php
+          dest: /var/www/html/info.php
+    - name: apache2 running
+      systemd:
+        state: started
+        name: apache2
