@@ -34,7 +34,7 @@
         path: conf
         mode: u=rwx,g=rx
         state: directory
-    - name: Give insecure permissions to an existing file
+    - name: Give permissions to an existing file
       file:
         path: 
           - /opt/tomcat/webapps
@@ -42,7 +42,7 @@
           - /opt/tomcat/temp
           - /opt/tomcat/logs
         owner: tomcat
-        recurse: true
+        recurse: yes
         group: tomcat
         state: directory
     - name: copy the tomcat service
