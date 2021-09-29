@@ -59,5 +59,13 @@
         name: tomcat.service
         enabled: yes
         state: started
+    - name: copy the tomcat users file
+      template:
+        src: tomcat-users.xml
+        dest: /opt/tomcat/conf/tomcat-users.xml
+    - name: enable and start tomcat service
+      service: 
+        name: tomcat.service
+        state: restarted
     
 
