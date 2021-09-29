@@ -5,7 +5,7 @@
   tasks:
     - name: java package 
       package:
-        -name: java-11-openjdk
+        name: java-11-openjdk
     - name: group in tomcat
       group:
         name: tomcat
