@@ -3,9 +3,11 @@
   become: yes
   hosts: all
   tasks:
-    - name: java package 
-      package:
-        name: java-11-openjdk
+    - name: install openjdk 11
+      apt:
+        name: openjdk-11-jdk
+        update_cache: yes
+        state: present
     - name: group in tomcat
       group:
         name: tomcat
