@@ -1,6 +1,6 @@
 ---
 - name: lampstack
-  host: all
+  hosts: all
   become: yes
   tasks:
     - name: apache and php packages
