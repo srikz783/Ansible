@@ -24,6 +24,7 @@
         dest: /tmp
     - name: untaring tomcat
       command: "tar xzvf /tmp/apache-tomcat-9.0.53.tar.gz -C /opt/tomcat --strip-components=1"
+      when: not tomcat_conf.stat.exists
     - name: Change file ownership, group and permissions
       file:
         path: /opt/tomcat
