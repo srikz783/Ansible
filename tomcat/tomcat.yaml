@@ -48,11 +48,11 @@
       template:
         src: tomcat.service
         dest: /etc/systemd/system/tomcat.service
-    - name: demon reload
+    - name: reload daemon
       systemd:
-        state: restarted
-        daemon_reload: yes
         name: tomcat.service
+        daemon_reload: yes
+        state: started
     - name: enable and start tomcat service
       service: 
         name: tomcat.service
