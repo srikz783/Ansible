@@ -42,6 +42,7 @@
           - /opt/tomcat/temp
           - /opt/tomcat/logs
         owner: tomcat
+        recurse: true
         group: tomcat
         state: directory
     - name: copy the tomcat service
