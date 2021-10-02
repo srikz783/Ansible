@@ -14,7 +14,7 @@
         state: directory
     - name: Downloading spring-pet-clinic
       get_url:
-        url: "{{download_url}}"
+        url: 
         dest: /usr/share/springpetclinic/spring-petclinic-2.4.2.jar
     - name: Adding user
       ansible.builtin.user:
