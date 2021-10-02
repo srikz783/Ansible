@@ -1,11 +1,1 @@
-[ubuntu]
-52.170.220.255
-
-[centos]
-52.170.220.255
-
-[appserver]
-52.170.220.255
-
-[webserver]
-52.170.220.255
+localhost
