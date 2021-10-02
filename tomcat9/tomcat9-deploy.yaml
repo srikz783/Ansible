@@ -10,7 +10,7 @@
         state: present
     - name: Ensure the group tomcat exists
       group:
-        name: "{{ tomcat_group }}"
+        name: tomcat
         state: present
     - name: Ensure tomcat home directory exists
       file:
